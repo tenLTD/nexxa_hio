@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXXAA Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="loading-screen"><div class="loader"></div></div>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="logo">N</span><span><strong>NEXXAA</strong><small>Connect · Learn · Invest</small></span></a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="training.html">Training</a>
+      <a href="certificate.html">Certificate</a>
+      <a href="team.html">Team</a>
+      <a href="gallery.html" class="active">Gallery</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero reveal">
+      <div>
+        <p class="eyebrow">Gallery</p>
+        <h1>Stories, projects, training moments, and community highlights.</h1>
+        <p class="page-intro">Browse a curated selection of the events and experiences that shape our ecosystem.</p>
+      </div>
+      <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80" alt="NEXXAA event gallery">
+    </section>
+
+    <section class="section reveal">
+      <div class="gallery-grid">
+        <article class="gallery-card card"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80" alt="Training session"><h3>Training photos</h3></article>
+        <article class="gallery-card card"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80" alt="Student project"><h3>Student projects</h3></article>
+        <article class="gallery-card card"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80" alt="Office snapshot"><h3>Office photos</h3></article>
+        <article class="gallery-card card"><img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=900&q=80" alt="Event image"><h3>Events</h3></article>
+        <article class="gallery-card card"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80" alt="Community workshop"><h3>Community workshops</h3></article>
+        <article class="gallery-card card"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80" alt="Innovation meetup"><h3>Innovation meetup</h3></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div><a class="brand footer-brand" href="index.html"><span class="logo">N</span><span><strong>NEXXAA</strong><small>Technology and learning ecosystem</small></span></a><p>© <span id="year"></span> NEXXAA. Built for ambitious people and modern organizations.</p></div>
+    <div class="footer-links"><a href="about.html">About</a><a href="services.html">Services</a><a href="contact.html">Contact</a></div>
+  </footer>
+  <button class="back-to-top" aria-label="Scroll to top">↑</button>
+  <div class="lightbox" id="lightbox"><img id="lightboxImage" alt="Lightbox preview"></div>
+  <script src="js/script.js"></script>
+</body>
+</html>

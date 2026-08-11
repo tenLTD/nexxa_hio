@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate Preview | NEXXAA</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main style="padding: 40px 20px;">
+    <section class="certificate-card" style="max-width: 900px; margin: 0 auto;">
+      <div class="certificate-preview" id="dynamicCertificatePreview"></div>
+      <div class="qr-wrapper" id="certificateQrCodePlaceholder"></div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
+        <button class="btn btn-primary" onclick="window.print()">Print Certificate</button>
+        <a class="btn btn-secondary" href="certificate.html">Back</a>
+      </div>
+    </section>
+  </main>
+  <script src="js/demo-data.js"></script>
+  <script src="js/qrcode.min.js"></script>
+  <script>
+    const data = JSON.parse(localStorage.getItem('nexxaaDemoData') || 'null') || demoData;
+    const certificate = data.certificates[0];
+    const student = data.users.find((u) => u.id === certificate.studentId);
+    const course = data.courses.find((c) => c.id === certificate.courseId);
+    const preview = document.getElementById('dynamicCertificatePreview');
+    const qrContainer = document.getElementById('certificateQrCodePlaceholder');
+
+    const verificationUrl = `${window.location.origin}/verify-certificate.html?certificate=${encodeURIComponent(certificate.verificationCode)}`;
+    const qrPayload = JSON.stringify({
+      certificate_id: certificate.certificateId,
+      verification_code: certificate.verificationCode,
+      student: student.fullName,
+      course: course.title,
+      issuedDate: certificate.issuedDate,
+      status: certificate.status,
+      verification_url: verificationUrl
+    });
+
+    preview.innerHTML = `
+      <p class="eyebrow">NEXXAA Certification</p>
+      <h2>Certificate of Completion</h2>
+      <p>This certifies that</p>
+      <h3>${student.fullName}</h3>
+      <p>has successfully completed the course</p>
+      <h3>${course.title}</h3>
+      <p>Completion date: ${certificate.issuedDate}</p>
+      <p>Certificate ID: ${certificate.certificateId}</p>
+      <p>Verification code: ${certificate.verificationCode}</p>
+      <p>Score: ${certificate.score}%</p>
+    `;
+
+    if (window.QRCode && qrContainer) {
+      qrContainer.innerHTML = '';
+      new QRCode(qrContainer, {
+        text: qrPayload,
+        width: 220,
+        height: 220,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+  </script>
+</body>
+</html>
