@@ -1,39 +1,42 @@
-const menuToggle = document.querySelector('.menu-toggle');
-const navLinks = document.querySelector('.nav-links');
-const header = document.querySelector('.site-header');
-const backToTop = document.querySelector('.back-to-top');
-const year = document.getElementById('year');
-const storageData = JSON.parse(localStorage.getItem('nexxaaDemoData') || 'null') || demoData;
-
-if (year) {
-  year.textContent = new Date().getFullYear();
+function initializeYear() {
+  const year = document.getElementById('year');
+  if (year) {
+    year.textContent = new Date().getFullYear();
+  }
 }
 
-if (menuToggle && navLinks) {
-  menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-    const expanded = navLinks.classList.contains('open');
-    menuToggle.setAttribute('aria-expanded', String(expanded));
-  });
+function initializeMenuToggle() {
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
 
-  document.querySelectorAll('.nav-links a').forEach((link) => {
-    link.addEventListener('click', () => navLinks.classList.remove('open'));
-  });
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      const expanded = navLinks.classList.contains('open');
+      menuToggle.setAttribute('aria-expanded', String(expanded));
+    });
+
+    document.querySelectorAll('.nav-links a').forEach((link) => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+  }
 }
 
-const revealItems = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      if (entry.target.querySelector('.counter')) {
-        animateCounters();
+function initializeRevealObserver() {
+  const revealItems = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        if (entry.target.querySelector('.counter')) {
+          animateCounters();
+        }
       }
-    }
-  });
-}, { threshold: 0.2 });
+    });
+  }, { threshold: 0.2 });
 
-revealItems.forEach((item) => observer.observe(item));
+  revealItems.forEach((item) => observer.observe(item));
+}
 
 function animateCounters() {
   const counters = document.querySelectorAll('.counter');
@@ -58,199 +61,118 @@ function animateCounters() {
   });
 }
 
-const words = ['learn', 'create', 'innovate', 'grow'];
-const typingTarget = document.querySelector('.typing-text');
+function initializeTypingText() {
+  const words = ['learn', 'create', 'innovate', 'grow'];
+  const typingTarget = document.querySelector('.typing-text');
 
-if (typingTarget) {
-  let wordIndex = 0;
-  let charIndex = 0;
-  let deleting = false;
+  if (typingTarget) {
+    let wordIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
 
-  const type = () => {
-    const currentWord = words[wordIndex];
-    typingTarget.textContent = currentWord.slice(0, charIndex);
+    const type = () => {
+      const currentWord = words[wordIndex];
+      typingTarget.textContent = currentWord.slice(0, charIndex);
 
-    if (!deleting && charIndex < currentWord.length) {
-      charIndex += 1;
-    } else if (deleting && charIndex > 0) {
-      charIndex -= 1;
-    } else {
-      deleting = !deleting;
-      if (!deleting) {
-        wordIndex = (wordIndex + 1) % words.length;
+      if (!deleting && charIndex < currentWord.length) {
+        charIndex += 1;
+      } else if (deleting && charIndex > 0) {
+        charIndex -= 1;
+      } else {
+        deleting = !deleting;
+        if (!deleting) {
+          wordIndex = (wordIndex + 1) % words.length;
+        }
       }
-    }
 
-    const speed = deleting ? 70 : 120;
-    setTimeout(type, speed);
-  };
+      const speed = deleting ? 70 : 120;
+      setTimeout(type, speed);
+    };
 
-  type();
+    type();
+  }
 }
 
-const slides = Array.from(document.querySelectorAll('.hero-slide'));
-let slideIndex = 0;
+function initializeSlider() {
+  const slides = Array.from(document.querySelectorAll('.hero-slide'));
+  let slideIndex = 0;
 
-function showSlide(index) {
-  slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
-}
+  function showSlide(index) {
+    slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+  }
 
-if (slides.length) {
-  setInterval(() => {
-    slideIndex = (slideIndex + 1) % slides.length;
-    showSlide(slideIndex);
-  }, 5000);
-
-  document.querySelectorAll('.slider-btn').forEach((button) => {
-    button.addEventListener('click', () => {
-      const direction = button.dataset.dir === 'next' ? 1 : -1;
-      slideIndex = (slideIndex + direction + slides.length) % slides.length;
+  if (slides.length) {
+    setInterval(() => {
+      slideIndex = (slideIndex + 1) % slides.length;
       showSlide(slideIndex);
+    }, 5000);
+
+    document.querySelectorAll('.slider-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const direction = button.dataset.dir === 'next' ? 1 : -1;
+        slideIndex = (slideIndex + direction + slides.length) % slides.length;
+        showSlide(slideIndex);
+      });
+    });
+  }
+}
+
+function initializeFAQ() {
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach((item) => {
+    const button = item.querySelector('.faq-question');
+    button?.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      faqItems.forEach((entry) => entry.classList.remove('active'));
+      if (!isActive) item.classList.add('active');
     });
   });
 }
 
-const faqItems = document.querySelectorAll('.faq-item');
-faqItems.forEach((item) => {
-  const button = item.querySelector('.faq-question');
-  button?.addEventListener('click', () => {
-    const isActive = item.classList.contains('active');
-    faqItems.forEach((entry) => entry.classList.remove('active'));
-    if (!isActive) item.classList.add('active');
-  });
-});
+function initializeLightbox() {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
 
-const lightbox = document.getElementById('lightbox');
-const lightboxImage = document.getElementById('lightboxImage');
-
-document.querySelectorAll('.gallery-card img').forEach((img) => {
-  img.addEventListener('click', () => {
-    lightboxImage.src = img.src;
-    lightbox.classList.add('active');
-  });
-});
-
-lightbox?.addEventListener('click', () => lightbox.classList.remove('active'));
-
-const contactForm = document.querySelector('.contact-form');
-const formMessage = document.querySelector('.form-message');
-contactForm?.addEventListener('submit', (event) => {
-  event.preventDefault();
-  if (formMessage) {
-    formMessage.textContent = 'Thanks! Your message has been received and we will get back to you soon.';
-  }
-  contactForm.reset();
-});
-
-window.addEventListener('scroll', () => {
-  if (header) header.classList.toggle('sticky', window.scrollY > 10);
-  if (backToTop) backToTop.classList.toggle('visible', window.scrollY > 300);
-});
-
-backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-function renderTeamMembers() {
-  const teamGrid = document.querySelector('.team-grid');
-  if (!teamGrid) return;
-
-  teamGrid.innerHTML = storageData.teamMembers.map((member) => `
-    <article class="team-card card">
-      <img src="${member.image}" alt="${member.name}">
-      <h3>${member.name}</h3>
-      <p><strong>${member.role}</strong></p>
-      <p>${member.bio}</p>
-    </article>
-  `).join('');
-}
-
-function renderTestimonials() {
-  const testimonialGrid = document.querySelector('.testimonial-grid');
-  if (!testimonialGrid) return;
-
-  testimonialGrid.innerHTML = storageData.testimonials.map((item) => `
-    <article class="testimonial-card">
-      <p>“${item.quote}”</p>
-      <strong>${item.author}</strong>
-    </article>
-  `).join('');
-}
-
-function getVerificationUrl(certificate) {
-  const verificationParam = encodeURIComponent(certificate.verificationCode);
-  if (window.location && window.location.origin && window.location.origin !== 'null') {
-    return `${window.location.origin}/verify-certificate.html?certificate=${verificationParam}`;
-  }
-  return `https://nexxaa.com/verify-certificate.html?certificate=${verificationParam}`;
-}
-
-function generateCertificateQRCode(container, certificate, student, course) {
-  if (!window.QRCode || !container) return;
-  container.innerHTML = '';
-  const qrText = JSON.stringify({
-    certificate_id: certificate.certificateId,
-    verification_code: certificate.verificationCode,
-    student: student.fullName,
-    course: course.title,
-    issuedDate: certificate.issuedDate,
-    status: certificate.status,
-    verification_url: getVerificationUrl(certificate)
+  document.querySelectorAll('.gallery-card img').forEach((img) => {
+    img.addEventListener('click', () => {
+      lightboxImage.src = img.src;
+      lightbox.classList.add('active');
+    });
   });
 
-  new QRCode(container, {
-    text: qrText,
-    width: 220,
-    height: 220,
-    colorDark: '#000000',
-    colorLight: '#ffffff',
-    correctLevel: QRCode.CorrectLevel.H
+  lightbox?.addEventListener('click', () => lightbox.classList.remove('active'));
+}
+
+function initializeContactForm() {
+  const contactForm = document.querySelector('.contact-form');
+  const formMessage = document.querySelector('.form-message');
+  contactForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (formMessage) {
+      formMessage.textContent = 'Thanks! Your message has been received and we will get back to you soon.';
+    }
+    contactForm.reset();
   });
 }
 
-function downloadCertificateQRCode(containerId, filename) {
-  const container = document.getElementById(containerId);
-  const canvas = container?.querySelector('canvas');
-  if (!canvas) return;
-  const link = document.createElement('a');
-  link.href = canvas.toDataURL('image/png');
-  link.download = filename;
-  link.click();
-}
+function initializeScrollEffects() {
+  const header = document.querySelector('.site-header');
+  const backToTop = document.querySelector('.back-to-top');
 
-function renderCertificatePreview() {
-  const preview = document.querySelector('.certificate-preview');
-  if (!preview) return;
-
-  const certificate = storageData.certificates[0];
-  const student = storageData.users.find((u) => u.id === certificate.studentId);
-  const course = storageData.courses.find((c) => c.id === certificate.courseId);
-
-  preview.innerHTML = `
-    <p class="eyebrow">NEXXAA Certification</p>
-    <h2>Certificate of Completion</h2>
-    <p>This certifies that</p>
-    <h3>${student.fullName}</h3>
-    <p>has successfully completed the course</p>
-    <h3>${course.title}</h3>
-    <p>Completion date: ${certificate.issuedDate}</p>
-    <p>Certificate ID: ${certificate.certificateId}</p>
-    <p>Verification code: ${certificate.verificationCode}</p>
-    <p>Score: ${certificate.score}%</p>
-    <div class="qr-wrapper" id="certificateQrCode"></div>
-    <button class="btn btn-secondary qr-download-btn" id="downloadCertificateQr">Download QR Code</button>
-  `;
-
-  generateCertificateQRCode(document.getElementById('certificateQrCode'), certificate, student, course);
-
-  const downloadButton = document.getElementById('downloadCertificateQr');
-  downloadButton?.addEventListener('click', () => {
-    downloadCertificateQRCode('certificateQrCode', `${certificate.certificateId}-QR.png`);
+  window.addEventListener('scroll', () => {
+    if (header) header.classList.toggle('sticky', window.scrollY > 10);
+    if (backToTop) backToTop.classList.toggle('visible', window.scrollY > 300);
   });
+
+  backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
-function setupCertificateVerification() {
+function initializeCertificateVerification() {
   const form = document.querySelector('.certificate-verify-form');
   const result = document.querySelector('.certificate-result');
   if (!form || !result) return;
+
+  const storageData = JSON.parse(localStorage.getItem('ebgDemoData') || 'null') || demoData;
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -266,9 +188,9 @@ function setupCertificateVerification() {
       result.innerHTML = `
         <article class="certificate-card verification-card">
           <div class="verification-header">
-            <span class="logo">N</span>
+            <span class="logo">E</span>
             <div>
-              <strong>NEXXAA</strong>
+              <strong>EBG LTD</strong>
               <p>Certificate Verification</p>
             </div>
           </div>
@@ -286,9 +208,37 @@ function setupCertificateVerification() {
         </article>
       `;
 
-      generateCertificateQRCode(document.getElementById('verificationQrCode'), certificate, student, course);
+      if (window.QRCode) {
+        const container = document.getElementById('verificationQrCode');
+        if (container) {
+          const qrText = JSON.stringify({
+            certificate_id: certificate.certificateId,
+            verification_code: certificate.verificationCode,
+            student: student.fullName,
+            course: course.title,
+            issuedDate: certificate.issuedDate,
+            status: certificate.status
+          });
+          new QRCode(container, {
+            text: qrText,
+            width: 220,
+            height: 220,
+            colorDark: '#000000',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H
+          });
+        }
+      }
+
       document.getElementById('downloadVerificationQr')?.addEventListener('click', () => {
-        downloadCertificateQRCode('verificationQrCode', `${certificate.certificateId}-verification-QR.png`);
+        const container = document.getElementById('verificationQrCode');
+        const canvas = container?.querySelector('canvas');
+        if (canvas) {
+          const link = document.createElement('a');
+          link.href = canvas.toDataURL('image/png');
+          link.download = `${certificate.certificateId}-verification-QR.png`;
+          link.click();
+        }
       });
     } else {
       result.innerHTML = '<p>No matching certificate found.</p>';
@@ -306,10 +256,26 @@ function handleCertificateQueryParam() {
   if (form) form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
 }
 
-window.addEventListener('load', () => {
-  renderTeamMembers();
-  renderTestimonials();
-  renderCertificatePreview();
-  setupCertificateVerification();
+function initializeAll() {
+  initializeYear();
+  initializeMenuToggle();
+  initializeRevealObserver();
+  initializeTypingText();
+  initializeSlider();
+  initializeFAQ();
+  initializeLightbox();
+  initializeContactForm();
+  initializeScrollEffects();
+  initializeCertificateVerification();
   handleCertificateQueryParam();
-});
+}
+
+document.addEventListener('componentsReady', initializeAll);
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initializeAll, 0);
+  });
+} else {
+  initializeAll();
+}

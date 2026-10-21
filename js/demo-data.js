@@ -4,7 +4,7 @@ const demoData = {
       id: 1,
       fullName: 'UWASE GRATIEN',
       username: 'uwaseg',
-      email: 'uwase@nexxaa.com',
+      email: 'uwase@ebgltd.com',
       phone: '+250788000111',
       location: 'Kigali, Rwanda',
       skills: ['HTML', 'CSS', 'JavaScript'],
@@ -14,7 +14,7 @@ const demoData = {
       id: 2,
       fullName: 'MUGISHA ERIC',
       username: 'ericm',
-      email: 'eric@nexxaa.com',
+      email: 'eric@ebgltd.com',
       phone: '+250788000222',
       location: 'Huye, Rwanda',
       skills: ['React', 'Node.js', 'MySQL'],
@@ -46,7 +46,7 @@ const demoData = {
   certificates: [
     {
       id: 1,
-      certificateId: 'NEXXAA-2026-00001',
+      certificateId: 'EBG-2026-00001',
       verificationCode: 'VER-2026-00001',
       studentId: 1,
       courseId: 1,
@@ -56,7 +56,7 @@ const demoData = {
     },
     {
       id: 2,
-      certificateId: 'NEXXAA-2026-00002',
+      certificateId: 'EBG-2026-00002',
       verificationCode: 'VER-2026-00002',
       studentId: 2,
       courseId: 2,
@@ -83,27 +83,27 @@ const demoData = {
   ],
   teamMembers: [
     {
-      name: 'Aline Mukamana',
+      name: 'Eniass Niyonzima',
       role: 'Founder & CEO',
-      bio: 'Leads strategy, partnerships, and innovation growth.',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80'
+      bio: 'Leads the company vision and connects learning, technology, and investment opportunities.',
+      image: 'images/ceo_image.jpeg'
     },
     {
-      name: 'Eric Ndayisaba',
-      role: 'Head of Training',
-      bio: 'Builds practical learning programs for modern careers.',
+      name: 'Gratien Uwase',
+      role: 'Head of Training & Software Development Manager',
+      bio: 'Designs hands-on programs that make digital skills practical and career-ready.',
       image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80'
     },
     {
       name: 'Grace Uwase',
       role: 'Product Designer',
-      bio: 'Designs intuitive digital experiences with accessibility in mind.',
+      bio: 'Specializes in user-centered design and elegant and intuitive digital experiences.',
       image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80'
     }
   ],
   testimonials: [
     {
-      quote: 'NEXXAA helped our team turn ideas into a polished digital experience.',
+      quote: 'EBG LTD helped our team turn ideas into a polished digital experience.',
       author: 'Aline, Founder'
     },
     {
@@ -117,6 +117,6 @@ const demoData = {
   ]
 };
 
-if (!localStorage.getItem('nexxaaDemoData')) {
-  localStorage.setItem('nexxaaDemoData', JSON.stringify(demoData));
+if (!localStorage.getItem('ebgDemoData')) {
+  localStorage.setItem('ebgDemoData', JSON.stringify(demoData));
 }
